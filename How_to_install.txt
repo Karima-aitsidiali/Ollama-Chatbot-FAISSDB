@@ -1,0 +1,275 @@
+# ===============================================================================
+#                    ACADEMICAI - GUIDE D'INSTALLATION COMPLET
+# ===============================================================================
+
+# ===============================================================================
+# ÉTAPE 1 : PRÉREQUIS SYSTÈME
+# ===============================================================================
+
+# Avant de commencer, assurez-vous d'avoir :
+# - Un ordinateur avec au moins 8 GB de RAM (16 GB recommandé)
+# - 20 GB d'espace disque libre
+# - Une connexion internet pour télécharger les dépendances
+# - Système d'exploitation : Windows 10+, macOS 12+, ou Ubuntu 20.04+
+
+# ===============================================================================
+# ÉTAPE 2 : INSTALLATION DES OUTILS DE BASE
+# ===============================================================================
+
+# 2.1 - INSTALLER PYTHON 3.11+
+# ------------------------------
+# Windows :
+#   1. Aller sur https://python.org/downloads/
+#   2. Télécharger Python 3.11 ou plus récent
+#   3. Cocher "Add Python to PATH" pendant l'installation
+#   4. Vérifier : ouvrir cmd et taper "python --version"
+
+# macOS :
+#   1. Installer Homebrew : /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+#   2. Installer Python : brew install python@3.11
+#   3. Vérifier : python3 --version
+
+# Ubuntu/Debian :
+#   sudo apt update
+#   sudo apt install python3.11 python3.11-pip python3.11-venv
+#   python3.11 --version
+
+# 2.2 - INSTALLER NODE.JS 20+
+# ----------------------------
+# Toutes plateformes :
+#   1. Aller sur https://nodejs.org/
+#   2. Télécharger la version LTS (Long Term Support)
+#   3. Installer avec les options par défaut
+#   4. Vérifier : node --version && npm --version
+
+# 2.3 - INSTALLER GIT
+# --------------------
+# Windows : Télécharger depuis https://git-scm.com/
+# macOS : brew install git
+# Ubuntu : sudo apt install git
+
+# 2.4 - INSTALLER OLLAMA (Serveur IA)
+# ------------------------------------
+# 1. Aller sur https://ollama.ai/download
+# 2. Télécharger pour votre système
+# 3. Installer et démarrer Ollama
+# 4. Télécharger un modèle : ollama pull llama2
+# 5. Vérifier : ollama list
+
+# ===============================================================================
+# ÉTAPE 3 : RÉCUPÉRATION DU CODE SOURCE
+# ===============================================================================
+
+# 3.1 - CLONER LE PROJET
+# -----------------------
+cd C:\Users\admin\Desktop
+# ou choisir votre répertoire de travail préféré
+
+# Si vous avez Git :
+# git clone [URL_DU_DEPOT] AcademicAI
+# cd AcademicAI
+
+# Ou télécharger directement et extraire dans AcademicAI/
+
+# 3.2 - VÉRIFIER LA STRUCTURE
+# ----------------------------
+# Vous devriez avoir :
+# AcademicAI/
+# ├──AcaBot
+# │   ├── mon-chatbot-ui/          # Frontend Vue.js
+# │   └── Ollama-Chatbot-FAISSDB/  # Backend Python
+# ├── requirements.txt             # Ce fichier
+# └── how_to_install.txt          # Guide d'installation
+
+# ===============================================================================
+# ÉTAPE 4 : INSTALLATION DU BACKEND (Python/FastAPI)
+# ===============================================================================
+
+# 4.1 - ALLER DANS LE DOSSIER BACKEND
+cd AcaBot/Ollama-Chatbot-FAISSDB/
+
+# 4.2 - CRÉER UN ENVIRONNEMENT VIRTUEL
+# Windows :
+python -m venv .venv
+.venv\Scripts\activate
+
+# macOS/Linux :
+python3 -m venv .venv
+source .venv/bin/activate
+
+# 4.3 - INSTALLER LES DÉPENDANCES PYTHON
+pip install --upgrade pip
+pip install -r requirements.txt
+
+# 4.4 - TÉLÉCHARGER LES DONNÉES NLTK (pour le traitement du texte)
+python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords')"
+
+# 4.5 - TESTER LE BACKEND
+# Option 1 - Interface en ligne de commande :
+python main.py
+
+# Option 2 - Serveur API web :
+uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
+
+# Le serveur devrait démarrer sur http://localhost:8000
+# Vous pouvez tester en allant sur http://localhost:8000/docs
+
+# ===============================================================================
+# ÉTAPE 5 : INSTALLATION DU FRONTEND (Vue.js)
+# ===============================================================================
+
+# 5.1 - OUVRIR UN NOUVEAU TERMINAL
+# Garder le backend qui tourne et ouvrir un nouveau terminal
+
+# 5.2 - ALLER DANS LE DOSSIER FRONTEND
+cd AcaBot/mon-chatbot-ui/
+
+# 5.3 - INSTALLER LES DÉPENDANCES NODE.JS
+npm install
+
+# Si vous avez des erreurs, essayez :
+npm install --legacy-peer-deps
+
+# 5.4 - DÉMARRER LE SERVEUR DE DÉVELOPPEMENT
+npm run dev
+
+# Le frontend devrait démarrer sur http://localhost:3000
+
+# ===============================================================================
+# ÉTAPE 6 : PREMIÈRE UTILISATION
+# ===============================================================================
+
+# 6.1 - ACCÉDER À L'APPLICATION
+# Ouvrir votre navigateur et aller sur http://localhost:3000
+
+# 6.2 - CRÉER LE PREMIER UTILISATEUR ADMIN
+# Utiliser l'interface ou l'API pour créer un compte administrateur
+
+# 6.3 - CONFIGURER LA STRUCTURE ACADÉMIQUE
+# - Créer des départements
+# - Ajouter des filières
+# - Définir des modules
+# - Créer des activités
+
+# 6.4 - AJOUTER VOS PREMIERS DOCUMENTS
+# Utiliser la fonction d'ingestion pour ajouter vos documents PDF, Word, etc.
+
+# ===============================================================================
+# ÉTAPE 7 : INSTALLATION EN PRODUCTION (DOCKER)
+# ===============================================================================
+
+# 7.1 - INSTALLER DOCKER
+# Télécharger et installer Docker Desktop depuis https://docker.com/
+
+# 7.2 - CONSTRUIRE LES IMAGES
+# Dans le dossier racine AcademicAI/ :
+
+# Construire le backend :
+cd AcaBot/Ollama-Chatbot-FAISSDB/
+docker build -t academicai-backend .
+
+# Construire le frontend :
+cd ../mon-chatbot-ui/
+docker build -t academicai-frontend .
+
+# 7.3 - LANCER AVEC DOCKER
+# Backend :
+docker run -d -p 8000:8000 academicai-backend
+
+# Frontend :
+docker run -d -p 80:80 academicai-frontend
+
+# ===============================================================================
+# DÉPANNAGE ET PROBLÈMES COURANTS
+# ===============================================================================
+
+# PROBLÈME : "Python n'est pas reconnu"
+# SOLUTION : Ajouter Python au PATH système
+
+# PROBLÈME : "npm command not found"
+# SOLUTION : Redémarrer le terminal après installation de Node.js
+
+# PROBLÈME : Erreurs d'installation pip
+# SOLUTION : Mettre à jour pip avec "pip install --upgrade pip"
+
+# PROBLÈME : Port déjà utilisé
+# SOLUTION : Changer le port ou arrêter l'autre service
+# Backend : uvicorn api.main:app --port 8001
+# Frontend : npm run dev -- --port 3001
+
+# PROBLÈME : Ollama non accessible
+# SOLUTION : Vérifier qu'Ollama est démarré et accessible sur http://localhost:11434
+
+# PROBLÈME : Base de données non trouvée
+# SOLUTION : Créer le dossier "bdd" dans le backend et relancer
+
+# ===============================================================================
+# COMMANDES UTILES POUR LE DÉVELOPPEMENT
+# ===============================================================================
+
+# REDÉMARRER LE BACKEND :
+cd AcaBot/Ollama-Chatbot-FAISSDB/
+source .venv/bin/activate  # ou .venv\Scripts\activate sur Windows
+uvicorn api.main:app --reload
+
+# REDÉMARRER LE FRONTEND :
+cd AcaBot/mon-chatbot-ui/
+npm run dev
+
+# VOIR LES LOGS BACKEND :
+# Les logs s'affichent directement dans le terminal
+
+# CONSTRUIRE LE FRONTEND POUR PRODUCTION :
+npm run build
+
+# TESTER LA PRODUCTION FRONTEND :
+npm run preview
+
+# ===============================================================================
+# STRUCTURE DES FICHIERS IMPORTANTS
+# ===============================================================================
+
+# Backend (Python) :
+# - api/main.py : Point d'entrée FastAPI
+# - api/endpoints.py : Routes de l'API
+# - rag_chatbot.py : Logique principale du chatbot
+# - requirements.txt : Dépendances Python
+
+# Frontend (Vue.js) :
+# - src/main.js : Point d'entrée Vue
+# - src/App.vue : Composant principal
+# - package.json : Dépendances Node.js
+# - vite.config.js : Configuration build
+
+# ===============================================================================
+# SUPPORT ET AIDE
+# ===============================================================================
+
+# En cas de problème :
+# 1. Vérifier que tous les prérequis sont installés
+# 2. Regarder les messages d'erreur dans les terminaux
+# 3. Vérifier que les ports ne sont pas déjà utilisés
+# 4. S'assurer qu'Ollama fonctionne correctement
+# 5. Consulter la documentation des outils utilisés
+
+# Pour des questions spécifiques au projet :
+# - Vérifier les fichiers de log
+# - Tester les composants individuellement
+# - Consulter la documentation technique
+
+# ===============================================================================
+#                            INSTALLATION TERMINÉE !
+# ===============================================================================
+
+
+# Résumé des URL importantes :
+# - Frontend : http://localhost:3000 (développement)
+# - Backend API : http://localhost:8000
+# - Documentation API : http://localhost:8000/docs
+# - Ollama : http://localhost:11434
+#
+# Prochaines étapes :
+# 1. Créer votre premier utilisateur administrateur
+# 2. Configurer votre structure académique
+# 3. Ajouter vos premiers documents
+# 4. Commencer à utiliser le chatbot !
