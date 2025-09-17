@@ -53,33 +53,8 @@
 # 1. Aller sur https://ollama.ai/download
 # 2. Télécharger pour votre système
 # 3. Installer et démarrer Ollama
-# 4. Télécharger un modèle : ollama pull llama2
+# 4. Télécharger un modèle : ollama pull gemma3
 # 5. Vérifier : ollama list
-
-# ===============================================================================
-# ÉTAPE 3 : RÉCUPÉRATION DU CODE SOURCE
-# ===============================================================================
-
-# 3.1 - CLONER LE PROJET
-# -----------------------
-cd C:\Users\admin\Desktop
-# ou choisir votre répertoire de travail préféré
-
-# Si vous avez Git :
-# git clone [URL_DU_DEPOT] AcademicAI
-# cd AcademicAI
-
-# Ou télécharger directement et extraire dans AcademicAI/
-
-# 3.2 - VÉRIFIER LA STRUCTURE
-# ----------------------------
-# Vous devriez avoir :
-# AcademicAI/
-# ├──AcaBot
-# │   ├── mon-chatbot-ui/          # Frontend Vue.js
-# │   └── Ollama-Chatbot-FAISSDB/  # Backend Python
-# ├── requirements.txt             # Ce fichier
-# └── how_to_install.txt          # Guide d'installation
 
 # ===============================================================================
 # ÉTAPE 4 : INSTALLATION DU BACKEND (Python/FastAPI)
@@ -154,30 +129,6 @@ npm run dev
 # 6.4 - AJOUTER VOS PREMIERS DOCUMENTS
 # Utiliser la fonction d'ingestion pour ajouter vos documents PDF, Word, etc.
 
-# ===============================================================================
-# ÉTAPE 7 : INSTALLATION EN PRODUCTION (DOCKER)
-# ===============================================================================
-
-# 7.1 - INSTALLER DOCKER
-# Télécharger et installer Docker Desktop depuis https://docker.com/
-
-# 7.2 - CONSTRUIRE LES IMAGES
-# Dans le dossier racine AcademicAI/ :
-
-# Construire le backend :
-cd AcaBot/Ollama-Chatbot-FAISSDB/
-docker build -t academicai-backend .
-
-# Construire le frontend :
-cd ../mon-chatbot-ui/
-docker build -t academicai-frontend .
-
-# 7.3 - LANCER AVEC DOCKER
-# Backend :
-docker run -d -p 8000:8000 academicai-backend
-
-# Frontend :
-docker run -d -p 80:80 academicai-frontend
 
 # ===============================================================================
 # DÉPANNAGE ET PROBLÈMES COURANTS
@@ -272,4 +223,5 @@ npm run preview
 # 1. Créer votre premier utilisateur administrateur
 # 2. Configurer votre structure académique
 # 3. Ajouter vos premiers documents
-# 4. Commencer à utiliser le chatbot !
+# 4. Commencer à utiliser le chatbot 
+
